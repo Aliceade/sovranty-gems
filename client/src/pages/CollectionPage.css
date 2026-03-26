@@ -1,0 +1,43 @@
+.collection-page { padding-bottom: 6rem; }
+
+.collection-header {
+  background: var(--maroon-dark);
+  padding: 10rem 0 4rem;
+  margin-bottom: 4rem;
+}
+
+.collection-header .eyebrow-text {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.collection-header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  color: var(--pearl);
+  line-height: 1.1;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.collection-empty {
+  text-align: center;
+  padding: 6rem 2rem;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--warm-grey);
+}
+
+@media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .collection-grid { grid-template-columns: 1fr; } }
