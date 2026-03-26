@@ -9,6 +9,7 @@ dotenv.config();
 const app = express();
 
 // CORS — allow local dev + Netlify production frontend
+/*
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:3000',
   /\.netlify\.app$/,       // any Netlify preview URL
@@ -19,6 +20,24 @@ app.use(cors({
     if (!origin) return callback(null, true); // allow non-browser requests (Postman, seeder)
     const allowed = allowedOrigins.some(o =>
       typeof o === 'string' ? o === origin : o.test(origin)
+    );
+    allowed ? callback(null, true) : callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+}));
+*/
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.CLIENT_URL,
+  /\.netlify\.app$/,
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const allowed = allowedOrigins.some(o =>
+      o && (typeof o === 'string' ? o === origin : o.test(origin))
     );
     allowed ? callback(null, true) : callback(new Error('Not allowed by CORS'));
   },
