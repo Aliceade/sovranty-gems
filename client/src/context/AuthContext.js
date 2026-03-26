@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
@@ -10,19 +10,18 @@ export const AuthProvider = ({ children }) => {
   });
   const [loading, setLoading] = useState(false);
 
-  // Set auth token on all requests
   useEffect(() => {
     if (user?.token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
     } else {
-      delete axios.defaults.headers.common['Authorization'];
+      delete api.defaults.headers.common['Authorization'];
     }
   }, [user]);
 
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const { data } = await axios.post('/api/auth/login', { email, password });
+      const { data } = await api.post('/auth/login', { email, password });
       setUser(data);
       localStorage.setItem('sovereignUser', JSON.stringify(data));
       return { success: true };
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (name, email, password) => {
     setLoading(true);
     try {
-      const { data } = await axios.post('/api/auth/register', { name, email, password });
+      const { data } = await api.post('/auth/register', { name, email, password });
       setUser(data);
       localStorage.setItem('sovereignUser', JSON.stringify(data));
       return { success: true };
@@ -50,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('sovereignUser');
-    delete axios.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
   };
 
   return (
